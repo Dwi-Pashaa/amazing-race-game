@@ -1,18 +1,40 @@
 {
     "version": 2,
-    "functions": {
-        "api/index.php": { 
-            "runtime": "vercel-php@0.6.0" 
+    "framework": null,
+    "builds": [
+        {
+            "src": "/api/index.php",
+            "use": "vercel-php@0.6.2"
+        },
+        {
+            "src": "/public/build/assets/**",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "/public/**",
+            "use": "@vercel/static"
         }
-    },
-    "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/" },
-        { "src": "/(.*)", "dest": "/api/index.php" }
     ],
-    "public": true,
-    "buildCommand": "vite build",
+    "routes": [
+        {
+            "src": "/build/assets/(.*)",
+            "dest": "/public/build/assets/$1"
+        },
+        {
+            "src": "/favicon.ico",
+            "headers": {
+                "Content-Type": "image/x-icon"
+            },
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
     "outputDirectory": "public",
     "env": {
+        "APP_NAME": "Amazing Race Game",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "APP_URL": "https://amazing-race-game.vercel.app/",
